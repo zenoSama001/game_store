@@ -41,6 +41,98 @@ def actionadv():
     games = Game.query.filter_by(genre = 'action-adventure').all()
     return render_template('gamelist.html', games=games, publishers=publishers)
 
+@app.route('/ps2')
+def ps2():
+    runs = Run.query.filter_by(platform_id = 1).all()
+    #platforms = Platform.query.filter_by(12).all()
+    publishers = Publisher.query.all()
+    games = Game.query.filter(Game.runs.any(platform_id=1))
+    return render_template('gamelist.html', games=games, publishers=publishers, run=runs)
+
+@app.route('/xb')
+def xb():
+    runs = Run.query.filter_by(platform_id = 2).all()
+    #platforms = Platform.query.filter_by(12).all()
+    publishers = Publisher.query.all()
+    games = Game.query.filter(Game.runs.any(platform_id=2))
+    return render_template('gamelist.html', games=games, publishers=publishers, run=runs)
+
+@app.route('/gc')
+def gc():
+    runs = Run.query.filter_by(platform_id = 3).all()
+    #platforms = Platform.query.filter_by(12).all()
+    publishers = Publisher.query.all()
+    games = Game.query.filter(Game.runs.any(platform_id=3))
+    return render_template('gamelist.html', games=games, publishers=publishers, run=runs)
+
+@app.route('/dc')
+def dc():
+    runs = Run.query.filter_by(platform_id = 4).all()
+    #platforms = Platform.query.filter_by(12).all()
+    publishers = Publisher.query.all()
+    games = Game.query.filter(Game.runs.any(platform_id=4))
+    return render_template('gamelist.html', games=games, publishers=publishers, run=runs)
+
+@app.route('/ps')
+def ps():
+    runs = Run.query.filter_by(platform_id = 5).all()
+    #platforms = Platform.query.filter_by(12).all()
+    publishers = Publisher.query.all()
+    games = Game.query.filter(Game.runs.any(platform_id=5))
+    flash("Games that are on the Playstation")
+    return render_template('gamelist.html', games=games, publishers=publishers, run=runs)
+
+@app.route('/n64')
+def n64():
+    runs = Run.query.filter_by(platform_id = 6).all()
+    #platforms = Platform.query.filter_by(12).all()
+    publishers = Publisher.query.all()
+    games = Game.query.filter(Game.runs.any(platform_id=6))
+    flash("Games that are on the Nintendo 64")
+    return render_template('gamelist.html', games=games, publishers=publishers, run=runs)
+
+@app.route('/x360')
+def x360():
+    runs = Run.query.filter_by(platform_id = 7).all()
+    #platforms = Platform.query.filter_by(12).all()
+    publishers = Publisher.query.all()
+    games = Game.query.filter(Game.runs.any(platform_id=7))
+    return render_template('gamelist.html', games=games, publishers=publishers, run=runs)
+
+@app.route('/ps3')
+def ps3():
+    runs = Run.query.filter_by(platform_id = 8).all()
+    #platforms = Platform.query.filter_by(12).all()
+    publishers = Publisher.query.all()
+    games = Game.query.filter(Game.runs.any(platform_id=8))
+    return render_template('gamelist.html', games=games, publishers=publishers, run=runs)
+
+@app.route('/wii')
+def wii():
+    runs = Run.query.filter_by(platform_id = 9).all()
+    #platforms = Platform.query.filter_by(12).all()
+    publishers = Publisher.query.all()
+    games = Game.query.filter(Game.runs.any(platform_id=9))
+    flash("Games that are on the Nintendo Wii")
+    return render_template('gamelist.html', games=games, publishers=publishers, run=runs)
+
+@app.route('/wiiu')
+def wiiu():
+    runs = Run.query.filter_by(platform_id = 10).all()
+    #platforms = Platform.query.filter_by(12).all()
+    publishers = Publisher.query.all()
+    games = Game.query.filter(Game.runs.any(platform_id=10))
+    flash("Games that are on the Nintendo Wii-U")
+    return render_template('gamelist.html', games=games, publishers=publishers, run=runs)
+
+@app.route('/xone')
+def xone():
+    runs = Run.query.filter_by(platform_id = 11).all()
+    #platforms = Platform.query.filter_by(12).all()
+    publishers = Publisher.query.all()
+    games = Game.query.filter(Game.runs.any(platform_id=11))
+    return render_template('gamelist.html', games=games, publishers=publishers, run=runs)
+
 @app.route('/ps4')
 def ps4():
     runs = Run.query.filter_by(platform_id = 12).all()
