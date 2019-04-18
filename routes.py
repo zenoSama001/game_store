@@ -4,6 +4,7 @@ from game_store.forms import RegistrationForm, LoginForm, BuyForm
 from game_store.models import Customer, Order, Run, Platform
 from flask_login import login_user, current_user, logout_user, login_required
 from game_store.models import Game, Publisher
+import datetime
 
 
 
@@ -17,6 +18,29 @@ def gl():
     publishers = Publisher.query.all()
     games = Game.query.all()
     return render_template('gamelist.html', games=games, publishers=publishers)
+
+@app.route("/game/<selected_game>", methods=['GET', 'POST'])
+@login_required
+def game(selected_game):
+    form = BuyForm()
+    if form.validate_on_submit():
+        game_name = selected_game
+        buying_game = Game.query.filter_by(game_name=game_name).first()
+        total_price = form.quantity.data * buying_game.price
+        flash(str(total_price))
+        current_user.balance -= total_price
+        this_order = Order(customer_id=current_user.id, date=datetime.datetime.now())
+        db.session.add(this_order)
+        try:
+            db.session.commit()
+            flash('your order was successful')
+            return redirect(url_for('account'))
+        except:
+            db.session.rollback()
+            flash('You do not have enough money for this order.')
+
+
+    return render_template('game.html', game=selected_game, form=form, title='Game')
 
 
 @app.route("/about")
@@ -232,14 +256,14 @@ def activision():
     return render_template('gamelist.html', games=games, publishers=publishers)
 
 
-@app.route("/game", methods=['GET', 'POST'])
-def game():
-    form = BuyForm()
-    if not current_user.is_authenticated:
-        flash('Please login before you can view this page. If you do not have an account, then please register.')
-        return redirect(url_for('login'))
-
-    return render_template('game.html', game=request.args.get('selected_game'), form=form, title='Game')
+# @app.route("/game", methods=['GET', 'POST'])
+# def game():
+#     form = BuyForm()
+#     if not current_user.is_authenticated:
+#         flash('Please login before you can view this page. If you do not have an account, then please register.')
+#         return redirect(url_for('login'))
+#
+#     return render_template('game.html', game=request.args.get('selected_game'), form=form, title='Game')
 
 
 @app.route("/register", methods=['GET', 'POST'])
